@@ -266,30 +266,6 @@ class FGST(nn.Module):
             raise TypeError(f'"pretrained" must be a str or None. '
                             f'But received {type(pretrained)}.')
 
-if __name__ == "__main__":
-    from fvcore.nn import FlopCountAnalysis
-    # input_size = 256
-    # inputs = torch.rand(1, 50, 3, 1280, 720).cuda()
-    # model = FGST().cuda()
-    # with torch.no_grad():
-    #     outputs = model(inputs)
-    # print(outputs.shape)
-
-    import time
-    inputs = torch.rand(1, 8, 3, 256, 256).cuda()
-    model = FGST().cuda()
-    # time1 = time.time()
-    # for i in range(50):
-    #     outputs = model(inputs)
-    # time2 = time.time()
-    # print(time2-time1)
-    # outputs = model(inputs)
-    # print(outputs.shape)
-    flops = FlopCountAnalysis(model, inputs)
-    n_param = sum([p.nelement() for p in model.parameters()])
-    print(f'GMac:{flops.total()/inputs.shape[1]}')
-    print(f'Params:{n_param}')
-
 
 
 
