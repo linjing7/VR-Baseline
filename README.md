@@ -34,6 +34,12 @@ cd VR_Baseline
 bash tools/dist_train.sh configs/FGST_deblur_gopro.py 8
 ```
 
-#### 4.Acknowledgement.
+#### 4. Testing
+Download [pretrained model](https://drive.google.com/drive/folders/1cmT0ti0-XwuCMcAhVEQWcD6rqCEwLo2T?usp=sharing) and run the following command.
+```shell
+python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
+```
+
+#### 5.Acknowledgement.
 
 We refer to codes from [BasicVSR++](https://github.com/ckkelvinchan/BasicVSR_PlusPlus) and [mmediting](https://github.com/open-mmlab/mmediting). Thanks for their awesome works.
