@@ -77,7 +77,7 @@ python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
 
 ## 6.  TODO 
 
-These works are mostly done during the internship at HUAWEI Noah's Ark Lab. Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs. It's expected to be completed by October 2022. 
+These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](http://dev3.noahlab.com.hk/). Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs. It's expected to be completed by October 2022. 
 
 - [ ] More Pretrained Models
 - [ ] Inference Results
