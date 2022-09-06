@@ -57,7 +57,7 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
     	    |-- train
 ```
 
-## 4. Training:
+## 3. Training:
 
 ```shell
 cd VR_Baseline
@@ -67,7 +67,7 @@ bash tools/dist_train.sh configs/FGST_deblur_gopro.py 8
 The training log, trained model will be available in `VR-Baseline/experiments/` . 
 
 
-## 5. Testing:
+## 4. Testing:
 
 Download [pretrained model](https://drive.google.com/drive/folders/1cmT0ti0-XwuCMcAhVEQWcD6rqCEwLo2T?usp=sharing) and run the following command.
 
@@ -75,14 +75,14 @@ Download [pretrained model](https://drive.google.com/drive/folders/1cmT0ti0-XwuC
 python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
 ```
 
-## 6.  TODO 
+## 5.  TODO 
 
 These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](http://dev3.noahlab.com.hk/). Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs. It's expected to be completed by October 2022. 
 
 - [ ] More Pretrained Models
 - [ ] Inference Results
  
-## 7. Citation
+## 6. Citation
 
 If this repo helps you, please consider citing our works:
 
