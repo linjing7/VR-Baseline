@@ -41,20 +41,20 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
 |--VR-Baseline
     |--data
     	|-- GoPro
-    		|-- test
-    		|-- train
+    	    |-- test
+    	    |-- train
     	|-- DVD
-    		|-- test
-    		|-- train
+    	    |-- test
+    	    |-- train
     	|-- REDS
-    		|-- test
-    		|-- train
+    	    |-- test
+    	    |-- train
     	|-- VIMEO
-    		|-- test
-    		|-- train
+    	    |-- test
+    	    |-- train
     	|-- MFQEV2
-    		|-- test
-    		|-- train
+    	    |-- test
+    	    |-- train
 ```
 
 ## 4. Training:
