@@ -82,10 +82,13 @@ These works are mostly done during the internship at HUAWEI Noah's Ark Lab. Due 
 - [ ] More Pretrained Models
 - [ ] Inference Results
  
-## 7. Citation
+## 7.  Acknowledgement.
+
+We refer to codes from [BasicVSR++](https://github.com/ckkelvinchan/BasicVSR_PlusPlus) and [mmediting](https://github.com/open-mmlab/mmediting). Thanks for their awesome works.
+
+## 8. Citation
 
 If this repo helps you, please consider citing our works:
-
 
 ```shell
 
