@@ -14,6 +14,11 @@
 
 ![ntire](/figure/ntire.png)
 
+#### News
+- **2022.08.05 :** Pretrained model of FGST on GOPRO dataset is released. :rocket: 
+- **2022.05.14 :** Our FGST and S2SVR are accepted by ICML2022. :rocket: 
+
+#### Papers
 - [Flow-Guided Sparse Transformer for Video Deblurring (ICML 2022)](https://arxiv.org/abs/2201.01893)
 - [Unsupervised Flow-Aligned Sequence-to-Sequence Learning for Video Restoration (ICML 2022)](https://arxiv.org/abs/2205.10195)
 
