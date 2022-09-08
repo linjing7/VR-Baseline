@@ -12,7 +12,7 @@
 
  [Jing Lin*](https://scholar.google.com/citations?hl=zh-CN&user=SvaU2GMAAAAJ), [Yuanhao Cai*](https://caiyuanhao1998.github.io), [Xiaowan Hu](https://scholar.google.com/citations?user=a_WRvyIAAAAJ&hl=zh-CN), [Haoqian Wang](https://scholar.google.com.hk/citations?user=eldgnIYAAAAJ&hl=zh-CN), [Youliang Yan](https://scholar.google.com/citations?user=JPUwfAMAAAAJ&hl=th), [Xueyi Zou](https://xueyizou.github.io/), [Henghui Ding](https://henghuiding.github.io/), [Yulun Zhang](yulunzhang.com), [Radu Timofte](https://people.ee.ethz.ch/~timofter/), and [Luc Van Gool](https://ee.ethz.ch/the-department/faculty/professors/person-detail.OTAyMzM=.TGlzdC80MTEsMTA1ODA0MjU5.html)
 
-#### Papers
+![ntire](/figure/ntire.png)
 
 - [Flow-Guided Sparse Transformer for Video Deblurring (ICML 2022)](https://arxiv.org/abs/2201.01893)
 - [Unsupervised Flow-Aligned Sequence-to-Sequence Learning for Video Restoration (ICML 2022)](https://arxiv.org/abs/2205.10195)
@@ -81,7 +81,7 @@ These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](htt
 
 - [ ] More Pretrained Models
 - [ ] Inference Results
- 
+
 ## 6.  Acknowledgement.
 
 We refer to codes from [BasicVSR++](https://github.com/ckkelvinchan/BasicVSR_PlusPlus) and [mmediting](https://github.com/open-mmlab/mmediting). Thanks for their awesome works.
@@ -93,19 +93,19 @@ If this repo helps you, please consider citing our works:
 ```shell
 
 # FGST
-@article{lin2022flow,
-  title={Flow-guided sparse transformer for video deblurring},
+@inproceedings{fgst,
+  title={Flow-Guided Sparse Transformer for Video Deblurring},
   author={Lin, Jing and Cai, Yuanhao and Hu, Xiaowan and Wang, Haoqian and Yan, Youliang and Zou, Xueyi and Ding, Henghui and Zhang, Yulun and Timofte, Radu and Van Gool, Luc},
-  journal={arXiv preprint arXiv:2201.01893},
+  booktitle={ICML},
   year={2022}
 }
 
 
 # S2SVR
-@article{lin2022unsupervised,
+@inproceedings{seq2seq,
   title={Unsupervised Flow-Aligned Sequence-to-Sequence Learning for Video Restoration},
-  author={Lin, Jing and Hu, Xiaowan and Cai, Yuanhao and Wang, Haoqian and Yan, Youliang and Zou, Xueyi and Zhang, Yulun and Van Gool, Luc},
-  journal={arXiv preprint arXiv:2205.10195},
+  author={Lin, Jing  and Hu, Xiaowan and Cai, Yuanhao and Wang, Haoqian and Yan, Youliang and Zou, Xueyi and Zhang, Yulun and Van Gool, Luc},
+  booktitle={ICML},
   year={2022}
 }
 ```
