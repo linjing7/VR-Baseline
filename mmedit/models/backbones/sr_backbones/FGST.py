@@ -265,22 +265,3 @@ class FGST(nn.Module):
         elif pretrained is not None:
             raise TypeError(f'"pretrained" must be a str or None. '
                             f'But received {type(pretrained)}.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
