@@ -19,8 +19,8 @@
 - **2022.05.14 :** Our FGST and S2SVR are accepted by ICML2022. :rocket: 
 
 |            *Super-Resolution*             |             *Deblur*             |            *Compressed Video Enhancement*             |
-| :------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: |
-| <img src="./figure/lr2sr.gif"  height=170 width=170> | <img src="./figure/blur2sharp.gif" width=170 height=170> | <img src="./figure/compressed2enhanced.gif" width=170 height=170> |
+| :------------------------------: | :-------------------------------: |  :-------------------------------: |
+| <img src="./figure/lr2sr.gif"  height=180 width=320> | <img src="./figure/blur2sharp.gif" width=180 height=320> | <img src="./figure/compressed2enhanced.gif" width=180 height=320> |
 
 #### Papers
 - [Flow-Guided Sparse Transformer for Video Deblurring (ICML 2022)](https://arxiv.org/abs/2201.01893)
