@@ -71,7 +71,12 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
 
 ```shell
 cd VR_Baseline
+
+# training FGST
 bash tools/dist_train.sh configs/FGST_deblur_gopro.py 8
+
+# training S2SVR
+bash tools/dist_train.sh configs/S2SVR_deblur_gopro.py 8
 ```
 
 The training log, trained model will be available in `VR-Baseline/experiments/` . 
