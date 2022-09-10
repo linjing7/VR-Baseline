@@ -40,6 +40,7 @@ pip install -r requirements.txt
 pip install openmim
 mim install mmcv-full
 pip install -v -e .
+pip install cupy-cuda101==7.7.0
 ```
 
 ## 2. Prepare Dataset:
