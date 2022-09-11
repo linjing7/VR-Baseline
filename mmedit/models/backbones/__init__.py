@@ -1,4 +1,4 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from .sr_backbones import BasicVSRPlusPlus
+from .sr_backbones import FGST, S2SVR
 
-__all__ = ['BasicVSRPlusPlus']
+__all__ = ['FGST', 'S2SVR']
