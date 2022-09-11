@@ -41,7 +41,7 @@ class S2SVR(nn.Module):
             if self.flow_cfg.test_shape != (h, w):
                 lq_1 = torch.nn.functional.interpolate(lq_1, self.flow_cfg.test_shape, mode='bilinear',align_corners=True)
                 lq_2 = torch.nn.functional.interpolate(lq_2, self.flow_cfg.test_shape, mode='bilinear',align_corners=True)
-            img_pair = torch.cat([lq_1, lq_2], 1)
+            img_pair = torch.cat([lq_2, lq_1], 1)
             res = self.pwclite(img_pair)
             if self.flow_cfg.test_shape != (h, w):
                 flows_forward.append(resize_flow(res['flows_fw'][0], (h, w)))
