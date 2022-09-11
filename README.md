@@ -10,6 +10,7 @@
 
 [![jiedu](https://img.shields.io/badge/中文解读-S2SVR-179bd3)](https://mp.weixin.qq.com/s/0Hqp2A8pjo1_Gn23LEpPXg)
 [![jiedu](https://img.shields.io/badge/中文解读-FGST-179bd3)](https://zhuanlan.zhihu.com/p/563455469)
+![visitors](https://visitor-badge.glitch.me/badge?page_id=linjing7/VR-Baseline)
 
 #### Authors
 
