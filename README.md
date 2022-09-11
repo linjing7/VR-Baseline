@@ -8,6 +8,9 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-flow-aligned-sequence-to/deblurring-on-gopro)](https://paperswithcode.com/sota/deblurring-on-gopro?p=unsupervised-flow-aligned-sequence-to)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-flow-aligned-sequence-to/video-enhancement-on-mfqe-v2)](https://paperswithcode.com/sota/video-enhancement-on-mfqe-v2?p=unsupervised-flow-aligned-sequence-to)
 
+[![jiedu](https://img.shields.io/badge/中文解读-S2SVR-179bd3)](https://mp.weixin.qq.com/s/0Hqp2A8pjo1_Gn23LEpPXg)
+[![jiedu](https://img.shields.io/badge/中文解读-FGST-179bd3)](https://zhuanlan.zhihu.com/p/563455469)
+
 #### Authors
 
  [Jing Lin*](https://scholar.google.com/citations?hl=zh-CN&user=SvaU2GMAAAAJ), [Yuanhao Cai*](https://caiyuanhao1998.github.io), [Xiaowan Hu](https://scholar.google.com/citations?user=a_WRvyIAAAAJ&hl=zh-CN), [Haoqian Wang](https://scholar.google.com.hk/citations?user=eldgnIYAAAAJ&hl=zh-CN), [Youliang Yan](https://scholar.google.com/citations?user=JPUwfAMAAAAJ&hl=th), [Xueyi Zou](https://xueyizou.github.io/), [Henghui Ding](https://henghuiding.github.io/), [Yulun Zhang](yulunzhang.com), [Radu Timofte](https://people.ee.ethz.ch/~timofter/), and [Luc Van Gool](https://ee.ethz.ch/the-department/faculty/professors/person-detail.OTAyMzM=.TGlzdC80MTEsMTA1ODA0MjU5.html)
