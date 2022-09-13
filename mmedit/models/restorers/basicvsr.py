@@ -107,7 +107,7 @@ class BasicVSR(BasicRestorer):
         optimizer['generator'].zero_grad()
         loss.backward()
         optimizer['generator'].step()
-        
+
         self.step_counter += 1
 
         outputs.update({'log_vars': log_vars})

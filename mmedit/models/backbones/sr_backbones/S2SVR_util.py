@@ -59,49 +59,74 @@ class Encoder(nn.Module):
         #### activation function
         self.lrelu = nn.LeakyReLU(negative_slope=0.1, inplace=True)
 
-    def forward(self,x, flows):
-        B, N, C, H, W = x.shape
-        flows_forward, flows_backward = flows
+    def forward(self, x, flows, cpu_cache):
+        n, t, c, h, w = x.shape
+        flows_forward, flows_backward = flows['forward'], flows['backward']
         encoder_hidden_state = []
 
         # 1st ResConvGRU layer, bi-directional
         # forward
         hidden_states_f = []
-        hidden_state = x.new_zeros(B, self.hidden_dim, H, W)
-        for i in range(0, N):
+        hidden_state = x.new_zeros(n, self.hidden_dim, h, w)
+        for i in range(0, t):
             if i > 0:  # no warping required for the first timestep
-                flow = flows_forward[:, i - 1, :, :, :]
+                flow = flows_forward[i-1]
+                if cpu_cache:
+                    flow = flow.cuda()
+                    hidden_state = hidden_state.cuda()
                 hidden_state = flow_warp(hidden_state, flow.permute(0, 2, 3, 1))
             hidden_state = self.encoder_layer1_f(hidden_state, x[:, i])
+            if cpu_cache:
+                hidden_state = hidden_state.cpu()
+                torch.cuda.empty_cache()
             hidden_states_f.append(hidden_state)
         encoder_hidden_state.append(hidden_state)
         # backward
         hidden_states_b = []
-        hidden_state = x.new_zeros(B, self.hidden_dim, H, W)
-        for i in range(N-1, -1, -1):
-            if i < N-1:  # no warping required for the last timestep
-                flow = flows_backward[:, i, :, :, :]
+        hidden_state = x.new_zeros(n, self.hidden_dim, h, w)
+        for i in range(t-1, -1, -1):
+            if i < t-1:  # no warping required for the last timestep
+                flow = flows_backward[i]
+                if cpu_cache:
+                    flow = flow.cuda()
+                    hidden_state = hidden_state.cuda()
                 hidden_state = flow_warp(hidden_state, flow.permute(0, 2, 3, 1))
-            hidden_state = self.encoder_layer1_b(hidden_state, x[:, i], hidden_states_f[i])
+            hidden_state_f = hidden_states_f[i]
+            if cpu_cache:
+                hidden_state_f = hidden_state_f.cuda()
+            hidden_state = self.encoder_layer1_b(hidden_state, x[:, i], hidden_state_f)
+            if cpu_cache:
+                hidden_state = hidden_state.cpu()
+                torch.cuda.empty_cache()
             hidden_states_b.append(hidden_state)
         hidden_states_b = hidden_states_b[::-1]
 
         # 2nd-4th ResConvGRU layers, uni-direction
-        inputs = torch.stack(hidden_states_b, 1)  # B,N,C,H,W
+        # inputs = torch.stack(hidden_states_b, 1)  # B,N,C,H,W
+        inputs = hidden_states_b
         for layer in range(len(self.encoder_layers)):
             hidden_states = []
-            hidden_state = x.new_zeros(B, self.hidden_dim, H, W)
-            for i in range(0, N):
+            hidden_state = x.new_zeros(n, self.hidden_dim, h, w)
+            for i in range(0, t):
                 if i > 0:  # no warping required for the first timestep
-                    flow = flows_forward[:, i - 1, :, :, :]
+                    flow = flows_forward[i - 1]
+                    if cpu_cache:
+                        flow = flow.cuda()
+                        hidden_state = hidden_state.cuda()
                     hidden_state = flow_warp(hidden_state, flow.permute(0, 2, 3, 1))
-                hidden_state = self.encoder_layers[layer](hidden_state, inputs[:,i])
+                input_i = inputs[i]
+                if cpu_cache:
+                    input_i = input_i.cuda()
+                hidden_state = self.encoder_layers[layer](hidden_state, input_i)
+                input_i = input_i + hidden_state
+                if cpu_cache:
+                    hidden_state = hidden_state.cpu()
+                    input_i = input_i.cpu()
+                    torch.cuda.empty_cache()
                 hidden_states.append(hidden_state)
-            hidden_states = torch.stack(hidden_states, 1)  # B,N,C,H,W
-            inputs = inputs + hidden_states
-            encoder_hidden_state.append(inputs[:,-1])
-        encoder_out = inputs
-        return encoder_out, encoder_hidden_state
+                inputs[i] = input_i
+            encoder_hidden_state.append(inputs[-1])
+        return inputs, encoder_hidden_state
 
 class Decoder(nn.Module):
     def __init__(self, hidden_dim=64, num_blocks=15, num_layers=3, is_low_res_input=False):
@@ -161,17 +186,17 @@ class Decoder(nn.Module):
         out = self.lrelu(self.conv_inp_4(out))
         return out
 
-    def forward(self, x, encoder_out, encoder_hidden_state, flows):
+    def forward(self, x, encoder_out, encoder_hidden_state, flows, cpu_cache):
         '''
-        encoder_out: the output of the top layer [B,N,C,H,W]
-        encoder_hidden_state: the hidden state of every layers Lx[B,C,H,W]
+        encoder_out: the output of the top layer [n,t,c,h,w]
+        encoder_hidden_state: the hidden state of every layers lx[n,c,h,w]
         flows: flows_forward, flows_backward
         '''
-        B, N, C, H, W = x.shape
-        flows_forward, flows_backward = flows
+        n, t, c, h, w = x.shape
+        flows_forward, flows_backward = flows['forward'], flows['backward']
 
         if self.is_low_res_input:
-            base = F.interpolate(x.view(-1, C, H, W), scale_factor=4, mode='bilinear', align_corners=False).view(B,N,C,4*H,4*W)
+            base = F.interpolate(x.view(-1, c, h, w), scale_factor=4, mode='bilinear', align_corners=False).view(n,t,c,4*h,4*w)
         else:
             base = x
 
@@ -180,40 +205,89 @@ class Decoder(nn.Module):
         hidden_state = encoder_hidden_state
         # backward
         outputs = []
-        input = encoder_out[:,-1]
-        for i in range(N - 1, -1, -1):
+        input = encoder_out[-1]
+        if cpu_cache:
+            input = input.cuda()
+        for i in range(t - 1, -1, -1):
             for layer in range(len(self.convgru_layers)):
-                if i < N-1:  # no warping required for the last timestep
-                    flow = flows_backward[:, i, :, :, :]
-                    hidden_state[layer] = flow_warp(hidden_state[layer], flow.permute(0, 2, 3, 1))
+                if i < t-1:  # no warping required for the last timestep
+                    flow = flows_backward[i]
+                    hidden_state_layer = hidden_state[layer]
+                    if cpu_cache:
+                        flow = flow.cuda()
+                        hidden_state_layer = hidden_state_layer.cuda()
+                    hidden_state_layer = flow_warp(hidden_state_layer, flow.permute(0, 2, 3, 1))
+                    if cpu_cache:
+                        hidden_state_layer = hidden_state_layer.cpu()
+                        torch.cuda.empty_cache()
+                    hidden_state[layer] = hidden_state_layer
                     if layer==0:
                         input = flow_warp(input, flow.permute(0, 2, 3, 1))
                 if layer == 0:
                     # The context vectors is computed once and shared on all layers
-                    hidden_state[layer] = self.convgru_layers[layer](hidden_state[layer], input)
-                    input = self.recon_layers[layer](hidden_state[layer])
-                    if i == N - 1:
-                        flow_f = flows_forward[:, i - 1]
-                        encoder_outputs_l = flow_warp(encoder_out[:, i - 1], flow_f.permute(0, 2, 3, 1))
-                        encoder_outputs_m = encoder_outputs_r = encoder_out[:, i]
+                    hidden_state_layer = hidden_state[layer]
+                    if cpu_cache:
+                        hidden_state_layer = hidden_state_layer.cuda()
+                    hidden_state_layer = self.convgru_layers[layer](hidden_state_layer, input)
+                    input = self.recon_layers[layer](hidden_state_layer)
+                    if cpu_cache:
+                        hidden_state_layer = hidden_state_layer.cpu()
+                        torch.cuda.empty_cache()
+                    hidden_state[layer] = hidden_state_layer
+                    if i == t - 1:
+                        flow_f = flows_forward[i - 1]
+                        encoder_out_l = encoder_out[i-1]
+                        encoder_out_m = encoder_out[i]
+                        if cpu_cache:
+                            flow_f = flow_f.cuda()
+                            encoder_out_l = encoder_out_l.cuda()
+                            encoder_out_m = encoder_out_m.cuda()
+                        encoder_out_l = flow_warp(encoder_out_l, flow_f.permute(0, 2, 3, 1))
+                        encoder_out_r = encoder_out_m
                     elif i == 0:
-                        flow_b = flows_backward[:, i]
-                        encoder_outputs_r = flow_warp(encoder_out[:, i + 1], flow_b.permute(0, 2, 3, 1))
-                        encoder_outputs_m = encoder_outputs_l = encoder_out[:, i]
+                        flow_b = flows_backward[i]
+                        encoder_out_r = encoder_out[i+1]
+                        encoder_out_m = encoder_out[i]
+                        if cpu_cache:
+                            flow_b = flow_b.cuda()
+                            encoder_out_r = encoder_out_r.cuda()
+                            encoder_out_m = encoder_out_m.cuda()
+                        encoder_out_r = flow_warp(encoder_out_r, flow_b.permute(0, 2, 3, 1))
+                        encoder_out_l = encoder_out_m
                     else:
-                        flow_f = flows_forward[:, i - 1]
-                        flow_b = flows_backward[:, i]
-                        encoder_outputs_r = flow_warp(encoder_out[:, i + 1], flow_b.permute(0, 2, 3, 1))
-                        encoder_outputs_l = flow_warp(encoder_out[:, i - 1], flow_f.permute(0, 2, 3, 1))
-                        encoder_outputs_m = encoder_out[:, i]
-                    context = self.attention(input,torch.stack([encoder_outputs_l, encoder_outputs_m, encoder_outputs_r],dim=1))
+                        flow_f = flows_forward[i - 1]
+                        flow_b = flows_backward[i]
+                        encoder_out_l = encoder_out[i - 1]
+                        encoder_out_m = encoder_out[i]
+                        encoder_out_r = encoder_out[i + 1]
+                        if cpu_cache:
+                            flow_f = flow_f.cuda()
+                            flow_b = flow_b.cuda()
+                            encoder_out_l = encoder_out_l.cuda()
+                            encoder_out_m = encoder_out_m.cuda()
+                            encoder_out_r = encoder_out_r.cuda()
+                        encoder_out_r = flow_warp(encoder_out_r, flow_b.permute(0, 2, 3, 1))
+                        encoder_out_l = flow_warp(encoder_out_l, flow_f.permute(0, 2, 3, 1))
+                        encoder_out_m = encoder_out_m
+                    context = self.attention(input,torch.stack([encoder_out_l, encoder_out_m, encoder_out_r],dim=1))
                 else:
                     residual = input
                     input = self.lrelu(self.fution_layers[layer-1](torch.cat((input, context), dim=1)))
-                    hidden_state[layer] = self.convgru_layers[layer](hidden_state[layer], input)
-                    input = self.recon_layers[layer](hidden_state[layer]) + residual
+
+                    hidden_state_layer = hidden_state[layer]
+                    if cpu_cache:
+                        hidden_state_layer = hidden_state_layer.cuda()
+                    hidden_state_layer = self.convgru_layers[layer](hidden_state_layer, input)
+                    input = self.recon_layers[layer](hidden_state_layer) + residual
+                    if cpu_cache:
+                        hidden_state_layer = hidden_state_layer.cpu()
+                        torch.cuda.empty_cache()
+                    hidden_state[layer] = hidden_state_layer
             output = self.hidden2out(input, base[:,i])
             input = self.out2inp(output)
+            if cpu_cache:
+                output = output.cpu()
+                torch.cuda.empty_cache()
             outputs.append(output)
         outputs = outputs[::-1]
         outputs = torch.stack(outputs, dim=1)

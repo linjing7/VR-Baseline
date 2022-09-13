@@ -9,7 +9,7 @@ model = dict(
         num_blocks=13,
         num_layers=3,
         is_low_res_input=False,
-        max_infer_length=25,
+        cpu_cache_length=25,
         pwclite_pretrained='pretrained_models/pwclite.tar',
         ),
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'))
