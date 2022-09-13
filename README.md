@@ -1,4 +1,7 @@
 # A Toolbox for Video Restoration
+[![jiedu](https://img.shields.io/badge/中文解读-S2SVR-179bd3)](https://mp.weixin.qq.com/s/0Hqp2A8pjo1_Gn23LEpPXg)
+[![jiedu](https://img.shields.io/badge/中文解读-FGST-179bd3)](https://zhuanlan.zhihu.com/p/563455469)
+![visitors](https://visitor-badge.glitch.me/badge?page_id=linjing7/VR-Baseline)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/flow-guided-sparse-transformer-for-video/deblurring-on-dvd-1)](https://paperswithcode.com/sota/deblurring-on-dvd-1?p=flow-guided-sparse-transformer-for-video)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/flow-guided-sparse-transformer-for-video/deblurring-on-dvd)](https://paperswithcode.com/sota/deblurring-on-dvd?p=flow-guided-sparse-transformer-for-video)
@@ -7,6 +10,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-flow-aligned-sequence-to/video-super-resolution-on-vimeo90k)](https://paperswithcode.com/sota/video-super-resolution-on-vimeo90k?p=unsupervised-flow-aligned-sequence-to)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-flow-aligned-sequence-to/deblurring-on-gopro)](https://paperswithcode.com/sota/deblurring-on-gopro?p=unsupervised-flow-aligned-sequence-to)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-flow-aligned-sequence-to/video-enhancement-on-mfqe-v2)](https://paperswithcode.com/sota/video-enhancement-on-mfqe-v2?p=unsupervised-flow-aligned-sequence-to)
+
 
 #### Authors
 
@@ -92,7 +96,7 @@ python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
 
 ## 5.  TODO 
 
-These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](http://dev3.noahlab.com.hk/). Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs. It's expected to be completed by October 2022. 
+These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](http://dev3.noahlab.com.hk/). Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs as soon as possible. 
 
 - [ ] More Pretrained Models
 - [ ] Inference Results
