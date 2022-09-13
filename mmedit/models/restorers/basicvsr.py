@@ -94,7 +94,7 @@ class BasicVSR(BasicRestorer):
             if not self.is_weight_fixed:
                 self.is_weight_fixed = True
                 for k, v in self.generator.named_parameters():
-                    if 'spynet' in k or 'edvr' in k:
+                    if 'spynet' in k or 'edvr' in k or 'pwclite' in k:
                         v.requires_grad_(False)
         elif self.step_counter == self.fix_iter:
             # train all the parameters
@@ -107,7 +107,7 @@ class BasicVSR(BasicRestorer):
         optimizer['generator'].zero_grad()
         loss.backward()
         optimizer['generator'].step()
-
+        
         self.step_counter += 1
 
         outputs.update({'log_vars': log_vars})
