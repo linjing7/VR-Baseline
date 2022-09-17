@@ -105,14 +105,12 @@ class Encoder(nn.Module):
         # inputs = torch.stack(hidden_states_b, 1)  # B,N,C,H,W
         inputs = hidden_states_b
         for layer in range(len(self.encoder_layers)):
-            hidden_states = []
             hidden_state = x.new_zeros(n, self.hidden_dim, h, w)
             for i in range(0, t):
                 if i > 0:  # no warping required for the first timestep
                     flow = flows_forward[i - 1]
                     if cpu_cache:
                         flow = flow.cuda()
-                        hidden_state = hidden_state.cuda()
                     hidden_state = flow_warp(hidden_state, flow.permute(0, 2, 3, 1))
                 input_i = inputs[i]
                 if cpu_cache:
@@ -120,10 +118,8 @@ class Encoder(nn.Module):
                 hidden_state = self.encoder_layers[layer](hidden_state, input_i)
                 input_i = input_i + hidden_state
                 if cpu_cache:
-                    hidden_state = hidden_state.cpu()
                     input_i = input_i.cpu()
                     torch.cuda.empty_cache()
-                hidden_states.append(hidden_state)
                 inputs[i] = input_i
             encoder_hidden_state.append(inputs[-1])
         return inputs, encoder_hidden_state

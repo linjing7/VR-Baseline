@@ -15,7 +15,7 @@ model = dict(
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'))
 
 # model training and testing settings
-train_cfg = dict(fix_iter=5000)
+train_cfg = dict(fix_iter=10000)
 test_cfg = dict(metrics=['PSNR', 'SSIM'], crop_border=0)
 
 # dataset settings

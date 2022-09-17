@@ -4,6 +4,8 @@ from mmedit.models.registry import BACKBONES
 from mmedit.utils import get_root_logger
 from mmedit.models.backbones.sr_backbones.S2SVR_util import Encoder, Decoder
 from mmedit.models.backbones.sr_backbones.pwclite import PWCLite, resize_flow, restore_model
+from mmedit.models.backbones.sr_backbones.basicvsr_net import (
+    ResidualBlocksWithInputConv, SPyNet)
 from mmcv.runner import load_checkpoint
 from easydict import EasyDict
 
@@ -14,6 +16,7 @@ class S2SVR(nn.Module):
         self.cpu_cache_length = cpu_cache_length
         self.encoder = Encoder(input_dim=3, hidden_dim=dim, num_blocks=num_blocks, num_layers=num_layers)
         self.decoder = Decoder(hidden_dim=dim, num_blocks=num_blocks, num_layers=num_layers, is_low_res_input=is_low_res_input)
+
         # optical flow
         cfg = {
             'model': {
