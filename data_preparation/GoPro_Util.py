@@ -1,4 +1,5 @@
 import os
+import argparse
 
 def recollect(path, new_path):
     for item in os.listdir(path):
@@ -22,9 +23,22 @@ def rename(path):
             print(imgs[i], f'{i:06d}.png')
 
 if __name__ == '__main__':
-    origin_path = '/data/gopro_ds/'
-    new_path = '/data/GoPro/'
+    parser = argparse.ArgumentParser(description='data preparation')
+    parser.add_argument(
+        '--input_path',
+        default='data/gopro_ds/',
+        type=str,
+        help='path of the original GoPro dataset')
+    parser.add_argument(
+        '--save-path',
+        default=None,
+        type=str,
+        help='path of the recollected GoPro dataset')
+
+    args = parser.parse_args()
+    origin_path = args.input_path
+    save_path = args.save_path
     for type1 in ['train', 'test']:
-        recollect(os.path.join(origin_path, type1), os.path.join(new_path, type1))
+        recollect(os.path.join(origin_path, type1), os.path.join(save_path, type1))
         for type2 in ['blur', 'GT']:
-            rename(os.path.join(new_path, type1, type2))
+            rename(os.path.join(save_path, type1, type2))
