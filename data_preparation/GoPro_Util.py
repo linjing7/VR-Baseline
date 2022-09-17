@@ -30,11 +30,10 @@ if __name__ == '__main__':
         type=str,
         help='path of the original GoPro dataset')
     parser.add_argument(
-        '--save-path',
+        '--save_path',
         default=None,
         type=str,
         help='path of the recollected GoPro dataset')
-
     args = parser.parse_args()
     origin_path = args.input_path
     save_path = args.save_path
