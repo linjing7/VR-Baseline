@@ -1,16 +1,13 @@
-exp_name = 'S2SVR_gopro'
+exp_name = 'FGST_dvd'
 
 # model settings
 model = dict(
     type='BasicVSR',
     generator=dict(
-        type='S2SVR',
-        dim=48,
-        num_blocks=13,
-        num_layers=3,
-        is_low_res_input=False,
-        cpu_cache_length=25,
-        pwclite_pretrained='pretrained_models/pwclite.tar',
+        type='FGST',
+        dim=32,
+        spynet_pretrained='https://download.openmmlab.com/mmediting/restorers/'
+        'basicvsr/spynet_20210409-c6c1bd09.pth',
         ),
     pixel_loss=dict(type='CharbonnierLoss', loss_weight=1.0, reduction='mean'))
 
@@ -100,21 +97,21 @@ data = dict(
         times=1000,
         dataset=dict(
             type=train_dataset_type,
-            lq_folder='data/GoPro/train/blur',
-            gt_folder='data/GoPro/train/GT',
-            num_input_frames=7,
+            lq_folder='data/DVD/quantitative_datasets/LQ',
+            gt_folder='data/DVD/quantitative_datasets/GT',
+            num_input_frames=30,
             pipeline=train_pipeline,
             scale=1,
-            ann_file='data/GoPro_train.txt',
+            ann_file='data/DVD_train.txt',
             test_mode=False)),
     # val
     val=dict(
         type=val_dataset_type,
-        lq_folder='data/GoPro/test/blur',
-        gt_folder='data/GoPro/test/GT',
+        lq_folder='data/DVD/quantitative_datasets/LQ',
+        gt_folder='data/DVD/quantitative_datasets/GT',
         pipeline=test_pipeline,
         scale=1,
-        ann_file='data/GoPro_test.txt',
+        ann_file='data/DVD_test.txt',
         test_mode=True),
     # test
     test=dict(
@@ -132,7 +129,7 @@ optimizers = dict(
         type='Adam',
         lr=2e-4,
         betas=(0.9, 0.99),
-        paramwise_cfg=dict(custom_keys={'pwclite': dict(lr_mult=0.25)})))
+        paramwise_cfg=dict(custom_keys={'spynet': dict(lr_mult=0.25)})))
 
 # learning policy
 total_iters = 200000

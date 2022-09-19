@@ -1,14 +1,14 @@
-exp_name = 'S2SVR_gopro'
+exp_name = 'S2SVR_reds4'
 
 # model settings
 model = dict(
     type='BasicVSR',
     generator=dict(
         type='S2SVR',
-        dim=48,
+        dim=64,
         num_blocks=13,
         num_layers=3,
-        is_low_res_input=False,
+        is_low_res_input=True,
         cpu_cache_length=25,
         pwclite_pretrained='pretrained_models/pwclite.tar',
         ),
@@ -19,14 +19,12 @@ train_cfg = dict(fix_iter=10000)
 test_cfg = dict(metrics=['PSNR', 'SSIM'], crop_border=0)
 
 # dataset settings
-train_dataset_type = 'SRFolderMultipleGTDataset'
-val_dataset_type = 'SRFolderMultipleGTDataset'
+train_dataset_type = 'SRREDSMultipleGTDataset'
+val_dataset_type = 'SRREDSMultipleGTDataset'
+test_dataset_type = 'SRFolderMultipleGTDataset'
 
 train_pipeline = [
-    dict(
-        type='GenerateSegmentIndices',
-        interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+    dict(type='GenerateSegmentIndices', interval_list=[1]),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -49,10 +47,7 @@ train_pipeline = [
 ]
 
 test_pipeline = [
-    dict(
-        type='GenerateSegmentIndices',
-        interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+    dict(type='GenerateSegmentIndices', interval_list=[1]),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -72,10 +67,7 @@ test_pipeline = [
 ]
 
 demo_pipeline = [
-    dict(
-        type='GenerateSegmentIndices',
-        interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+    dict(type='GenerateSegmentIndices', interval_list=[1]),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -88,11 +80,9 @@ demo_pipeline = [
 
 data = dict(
     workers_per_gpu=6,
-    train_dataloader=dict(
-        samples_per_gpu=1, drop_last=True, persistent_workers=False),  # 8 gpus
-    val_dataloader=dict(samples_per_gpu=1, persistent_workers=False),
-    test_dataloader=dict(
-        samples_per_gpu=1, workers_per_gpu=1, persistent_workers=False),
+    train_dataloader=dict(samples_per_gpu=1, drop_last=True),  # 8 gpus
+    val_dataloader=dict(samples_per_gpu=1),
+    test_dataloader=dict(samples_per_gpu=1, workers_per_gpu=1),
 
     # train
     train=dict(
@@ -100,25 +90,27 @@ data = dict(
         times=1000,
         dataset=dict(
             type=train_dataset_type,
-            lq_folder='data/GoPro/train/blur',
-            gt_folder='data/GoPro/train/GT',
-            num_input_frames=7,
+            lq_folder='data/REDS/train_sharp_bicubic/X4',
+            gt_folder='data/REDS/train_sharp',
+            num_input_frames=15,
             pipeline=train_pipeline,
-            scale=1,
-            ann_file='data/GoPro_train.txt',
+            scale=4,
+            val_partition='REDS4',
             test_mode=False)),
     # val
     val=dict(
         type=val_dataset_type,
-        lq_folder='data/GoPro/test/blur',
-        gt_folder='data/GoPro/test/GT',
+        lq_folder='data/REDS/train_sharp_bicubic/X4',
+        gt_folder='data/REDS/train_sharp',
+        num_input_frames=100,
         pipeline=test_pipeline,
-        scale=1,
-        ann_file='data/GoPro_test.txt',
+        scale=4,
+        val_partition='REDS4',
+        repeat=2,
         test_mode=True),
     # test
     test=dict(
-        type=val_dataset_type,
+        type=test_dataset_type,
         lq_folder='data/test/LQ',
         gt_folder='data/test/GT',
         pipeline=test_pipeline,
@@ -130,16 +122,16 @@ data = dict(
 optimizers = dict(
     generator=dict(
         type='Adam',
-        lr=2e-4,
+        lr=1e-4,
         betas=(0.9, 0.99),
         paramwise_cfg=dict(custom_keys={'pwclite': dict(lr_mult=0.25)})))
 
 # learning policy
-total_iters = 200000
+total_iters = 600000
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
-    periods=[200000],
+    periods=[600000],
     restart_weights=[1],
     min_lr=1e-7)
 
@@ -150,14 +142,14 @@ log_config = dict(
     interval=100,
     hooks=[
         dict(type='TextLoggerHook', by_epoch=False),
-        dict(type='TensorboardLoggerHook'),
+        # dict(type='TensorboardLoggerHook'),
     ])
 visual_config = None
 
 # runtime settings
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-work_dir = f'./experiments/{exp_name}'
+work_dir = f'./work_dirs/{exp_name}'
 load_from = None
 resume_from = None
 workflow = [('train', 1)]

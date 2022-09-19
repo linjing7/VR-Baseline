@@ -58,20 +58,20 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
     	    |-- test
     	    |-- train
     	|-- DVD
-    	    |-- test
-    	    |-- train
+    	    |-- quantitative_datasets
+    	    |-- qualitative_datasets
     	|-- REDS
-    	    |-- test
-    	    |-- train
+    	    |-- train_sharp_bicubic
+    	    |-- train_sharp
     	|-- VIMEO
-    	    |-- test
-    	    |-- train
+    	    |-- BIx4
+    	    |-- GT
     	|-- MFQEV2
     	    |-- test
     	    |-- train
 ```
 
-To recollect GoPro dataset, you can run the following command:
+For example, to recollect GoPro dataset, you can run the following command:
 ```shell
 cd /VR-Baseline/data_preparation
 python GoPro_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
@@ -94,6 +94,9 @@ bash tools/dist_train.sh configs/S2SVR_deblur_gopro.py 8
 
 # training S2SVR on REDS dataset
 bash tools/dist_train.sh configs/S2SVR_sr_reds4.py 8
+
+# training S2SVR on VIMEO dataset
+bash tools/dist_train.sh configs/S2SVR_sr_vimeo.py 8
 
 # training S2SVR on MFQEv2 dataset
 bash tools/dist_train.sh configs/S2SVR_vqe_mfqev2.py 8
