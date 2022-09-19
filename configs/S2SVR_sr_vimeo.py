@@ -165,6 +165,6 @@ visual_config = None
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 work_dir = f'./work_dirs/{exp_name}'
-load_from = 'experiments/basicvsr_plusplus_c64n7_8x1_600k_reds4/iter_600000.pth'  # noqa
+load_from = 'experiments/s2svr_reds4/iter_600000.pth'  # noqa
 resume_from = None
 workflow = [('train', 1)]
