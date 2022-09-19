@@ -71,16 +71,32 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
     	    |-- train
 ```
 
+To recollect GoPro dataset, you can run the following command:
+```shell
+cd /VR-Baseline/data_preparation
+python GoPro_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
+```
+You need to replace `INPUT_PATH` and `SAVE_PATH` with your own path.
+
 ## 3. Training:
 
 ```shell
 cd VR_Baseline
 
-# training FGST
+# training FGST on GoPro dataset
 bash tools/dist_train.sh configs/FGST_deblur_gopro.py 8
 
-# training S2SVR
+# training FGST on DVD dataset
+bash tools/dist_train.sh configs/DVD_deblur_gopro.py 8
+
+# training S2SVR on GoPro dataset
 bash tools/dist_train.sh configs/S2SVR_deblur_gopro.py 8
+
+# training S2SVR on REDS dataset
+bash tools/dist_train.sh configs/S2SVR_sr_reds4.py 8
+
+# training S2SVR on MFQEv2 dataset
+bash tools/dist_train.sh configs/S2SVR_vqe_mfqev2.py 8
 ```
 
 The training log, trained model will be available in `VR-Baseline/experiments/` . 
