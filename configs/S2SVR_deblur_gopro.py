@@ -132,7 +132,7 @@ optimizers = dict(
         type='Adam',
         lr=2e-4,
         betas=(0.9, 0.99),
-        paramwise_cfg=dict(custom_keys={'pwclite': dict(lr_mult=0.25)})))
+        paramwise_cfg=dict(custom_keys={'spynet': dict(lr_mult=0.25)})))
 
 # learning policy
 total_iters = 200000
