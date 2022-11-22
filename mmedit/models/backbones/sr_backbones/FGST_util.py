@@ -41,16 +41,29 @@ class PreNorm(nn.Module):
         x = self.norm(x.permute(0,1,3,4,2)).permute(0,1,4,2,3)
         return self.fn(x, *args, **kwargs)
 
+# ResidualBlock
+class ResidualBlock(nn.Module):
+    def __init__(self, dim, act_layer=nn.GELU):
+        super().__init__()
+        # residual blocks
+        self.conv1 = nn.Conv2d(dim, dim, 3, 1, 1, bias=True)
+        self.conv2 = nn.Conv2d(dim, dim, 3, 1, 1, bias=True)
+        self.norm = nn.LayerNorm(dim)
+        self.act = act_layer()
+
+    def forward(self, x):
+        input = x
+        x = self.norm(x.permute(0,2,3,1)).permute(0,3,1,2)
+        return input + self.conv2(self.act(self.conv1(x)))
+
 # Feedforward Network
 class FeedForward(nn.Module):
     def __init__(self, dim, num_resblocks):
         super().__init__()
-        main = []
-        # residual blocks
-        main.append(
-            make_layer(
-                ResidualBlockNoBN, num_resblocks, mid_channels=dim))
-        self.net = nn.Sequential(*main)
+        net = [
+            ResidualBlock(dim, act_layer=nn.GELU)
+            for _ in range(num_resblocks)]
+        self.net = nn.Sequential(*net)
 
     def forward(self, x):
         out = self.net(x)

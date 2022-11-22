@@ -23,7 +23,7 @@ train_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -49,7 +49,7 @@ test_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -72,7 +72,7 @@ demo_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -86,7 +86,7 @@ demo_pipeline = [
 data = dict(
     workers_per_gpu=6,
     train_dataloader=dict(
-        samples_per_gpu=1, drop_last=True, persistent_workers=False),  # 8 gpus
+        samples_per_gpu=2, drop_last=True, persistent_workers=False),  # 8 gpus
     val_dataloader=dict(samples_per_gpu=1, persistent_workers=False),
     test_dataloader=dict(
         samples_per_gpu=1, workers_per_gpu=1, persistent_workers=False),
@@ -99,7 +99,7 @@ data = dict(
             type=train_dataset_type,
             lq_folder='data/DVD/quantitative_datasets/LQ',
             gt_folder='data/DVD/quantitative_datasets/GT',
-            num_input_frames=30,
+            num_input_frames=13,
             pipeline=train_pipeline,
             scale=1,
             ann_file='data/DVD_train.txt',

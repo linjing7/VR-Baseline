@@ -42,7 +42,7 @@
 pip install torchvision==0.9.0  torch==1.8.0  torchaudio==0.8.0
 pip install -r requirements.txt
 pip install openmim
-mim install mmcv-full
+mim install mmcv-full==1.5.0
 pip install -v -e .
 pip install cupy-cuda101==7.7.0
 ```
