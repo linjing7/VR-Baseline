@@ -59,6 +59,8 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
     	    |-- train
     	|-- DVD
     	    |-- quantitative_datasets
+    	      |-- GT
+    	      |-- LQ
     	    |-- qualitative_datasets
     	|-- REDS
     	    |-- train_sharp_bicubic
