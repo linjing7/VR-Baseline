@@ -20,7 +20,7 @@ def rename(path):
         imgs = sorted(os.listdir(folder_path))
         for i in range(len(imgs)):
             os.rename(os.path.join(folder_path, imgs[i]), os.path.join(folder_path, f'{i:06d}.png'))
-            print(imgs[i], f'{i:06d}.png')
+            # print(imgs[i], f'{i:06d}.png')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='data preparation')

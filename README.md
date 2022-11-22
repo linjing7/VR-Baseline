@@ -73,7 +73,7 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
 
 For example, to recollect GoPro dataset, you can run the following command:
 ```shell
-cd /VR-Baseline/data_preparation
+cd VR-Baseline/data_preparation
 python GoPro_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
 ```
 You need to replace `INPUT_PATH` and `SAVE_PATH` with your own path.
