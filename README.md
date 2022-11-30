@@ -73,10 +73,15 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
     	    |-- train
 ```
 
-For example, to recollect GoPro dataset, you can run the following command:
+You can run the following command to recollect GoPro and DVD dataset:
 ```shell
 cd VR-Baseline/data_preparation
+
+# recollect GoPro dataset
 python GoPro_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
+
+# recollect DVD dataset
+python DVD_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
 ```
 You need to replace `INPUT_PATH` and `SAVE_PATH` with your own path.
 
@@ -111,6 +116,14 @@ The training log, trained model will be available in `VR-Baseline/experiments/` 
 
 Download [pretrained model](https://drive.google.com/drive/folders/1cmT0ti0-XwuCMcAhVEQWcD6rqCEwLo2T?usp=sharing) and run the following command.
 
+To test on benchmark:
+```shell
+cd VR_Baseline
+
+# testing FGST on GoPro dataset
+bash tools/dist_train.sh configs/FGST_deblur_gopro_test.py 8
+```
+To test on your own dataset:
 ```python
 python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
 ```
