@@ -27,7 +27,7 @@ def parse_args():
         help='index corresponds to the first frame of the sequence')
     parser.add_argument(
         '--filename-tmpl',
-        default='{:08d}.png',
+        default='{:06d}.png',
         help='template of the file names')
     parser.add_argument(
         '--window-size',

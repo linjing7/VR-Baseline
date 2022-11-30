@@ -1,4 +1,4 @@
-exp_name = 'FGST_dvd'
+exp_name = 'FGST_gopro'
 
 # model settings
 model = dict(
@@ -6,7 +6,7 @@ model = dict(
     generator=dict(
         type='FGST',
         dim=32,
-        patch_test=False,
+        patch_test=True,
         spynet_pretrained='https://download.openmmlab.com/mmediting/restorers/'
         'basicvsr/spynet_20210409-c6c1bd09.pth',
         ),
@@ -24,7 +24,7 @@ train_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:05d}.jpg'),
+        filename_tmpl='{:06d}.png'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -50,7 +50,7 @@ test_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:05d}.jpg'),
+        filename_tmpl='{:06d}.png'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -73,7 +73,7 @@ demo_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:05d}.jpg'),
+        filename_tmpl='{:06d}.png'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -87,7 +87,7 @@ demo_pipeline = [
 data = dict(
     workers_per_gpu=6,
     train_dataloader=dict(
-        samples_per_gpu=2, drop_last=True, persistent_workers=False),  # 8 gpus
+        samples_per_gpu=1, drop_last=True, persistent_workers=False),  # 8 gpus
     val_dataloader=dict(samples_per_gpu=1, persistent_workers=False),
     test_dataloader=dict(
         samples_per_gpu=1, workers_per_gpu=1, persistent_workers=False),
@@ -98,29 +98,30 @@ data = dict(
         times=1000,
         dataset=dict(
             type=train_dataset_type,
-            lq_folder='data/DVD/quantitative_datasets/LQ',
-            gt_folder='data/DVD/quantitative_datasets/GT',
-            num_input_frames=13,
+            lq_folder='data/GoPro/train/blur',
+            gt_folder='data/GoPro/train/GT',
+            num_input_frames=2,
             pipeline=train_pipeline,
             scale=1,
-            ann_file='data/DVD_train.txt',
+            ann_file='data/GoPro_train.txt',
             test_mode=False)),
     # val
     val=dict(
         type=val_dataset_type,
-        lq_folder='data/DVD/quantitative_datasets/LQ',
-        gt_folder='data/DVD/quantitative_datasets/GT',
+        lq_folder='data/GoPro/test/blur',
+        gt_folder='data/GoPro/test/GT',
         pipeline=test_pipeline,
         scale=1,
-        ann_file='data/DVD_test.txt',
+        ann_file='data/GoPro_test.txt',
         test_mode=True),
     # test
     test=dict(
         type=val_dataset_type,
-        lq_folder='data/test/LQ',
-        gt_folder='data/test/GT',
+        lq_folder='data/GoPro/test/blur',
+        gt_folder='data/GoPro/test/blur',
         pipeline=test_pipeline,
         scale=1,
+        ann_file='data/GoPro_test.txt',
         test_mode=True),
 )
 
@@ -128,12 +129,12 @@ data = dict(
 optimizers = dict(
     generator=dict(
         type='Adam',
-        lr=2e-4,
+        lr=0,
         betas=(0.9, 0.99),
         paramwise_cfg=dict(custom_keys={'spynet': dict(lr_mult=0.25)})))
 
 # learning policy
-total_iters = 200000
+total_iters = 1
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
@@ -143,7 +144,7 @@ lr_config = dict(
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
 # remove gpu_collect=True in non distributed training
-evaluation = dict(interval=5000, save_image=False, gpu_collect=True)
+evaluation = dict(interval=1, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -156,7 +157,7 @@ visual_config = None
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 work_dir = f'./experiments/{exp_name}'
-load_from = None
+load_from = './pretrained_models/FGST.pth'
 resume_from = None
 workflow = [('train', 1)]
 find_unused_parameters = True

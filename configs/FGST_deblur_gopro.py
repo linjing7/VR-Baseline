@@ -6,6 +6,7 @@ model = dict(
     generator=dict(
         type='FGST',
         dim=32,
+        patch_test=False,
         spynet_pretrained='https://download.openmmlab.com/mmediting/restorers/'
         'basicvsr/spynet_20210409-c6c1bd09.pth',
         ),
@@ -136,7 +137,7 @@ total_iters = 200000
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
-    periods=[200000],
+    periods=[total_iters],
     restart_weights=[1],
     min_lr=1e-7)
 

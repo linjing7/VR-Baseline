@@ -8,6 +8,7 @@ from mmedit.models.backbones.sr_backbones.basicvsr_net import (
     ResidualBlocksWithInputConv, SPyNet)
 from mmedit.models.common import (ResidualBlockNoBN, make_layer)
 from mmcv.runner import load_checkpoint
+from einops import rearrange
 
 def Forward(x, model, cpu_cache):
     feat = []
@@ -25,10 +26,11 @@ def Forward(x, model, cpu_cache):
 
 @BACKBONES.register_module()
 class FGST(nn.Module):
-    def __init__(self, dim=32, spynet_pretrained=None, cpu_cache_length=30):
+    def __init__(self, dim=32, spynet_pretrained=None, cpu_cache_length=30, patch_test=False):
         super(FGST, self).__init__()
         self.dim = dim
         self.cpu_cache_length = cpu_cache_length
+        self.patch_test = patch_test
 
         #### optical flow
         self.spynet = SPyNet(pretrained=spynet_pretrained)
@@ -112,12 +114,10 @@ class FGST(nn.Module):
         #### activation function
         self.lrelu = nn.LeakyReLU(negative_slope=0.1, inplace=True)
 
-    def spatial_padding(self, lqs):
+    def spatial_padding(self, lqs, pad_size=(12, 12)):
 
         n, t, c, h, w = lqs.shape
-        tb, hb, wb = self.window_size
-        hb *= 4
-        wb *= 4
+        (hb, wb) = pad_size
         pad_h = (hb - h % hb) % hb
         pad_w = (wb - w % wb) % wb
 
@@ -160,7 +160,11 @@ class FGST(nn.Module):
         :return: out: [n,t,c,h,w]
         """
         n, t, c, h_input, w_input = x.size()
-
+        if self.patch_test and (h_input, w_input) != (256, 256):
+            # pad the input and make sure that it can be reshape into several windows
+            x = self.spatial_padding(x, pad_size=(256, 256))
+            h_pad, w_pad = x.shape[-2], x.shape[-1]
+            x = rearrange(x, 'n t c (h p1) (w p2)-> (n h w) t c p1 p2', p1=256, p2=256)
         # whether to cache the features in CPU (no effect if using CPU)
         if t > self.cpu_cache_length and x.is_cuda:
             self.cpu_cache = True
@@ -248,11 +252,15 @@ class FGST(nn.Module):
                 torch.cuda.empty_cache()
             outputs.append(out)
         outputs = torch.stack(outputs, dim=1)
+
+        if self.patch_test and (h_input, w_input) != (256, 256):
+            outputs = outputs[:, :, :, :256, :256]
+            outputs = rearrange(outputs, '(n h w) t c p1 p2 -> n t c (h p1) (w p2)', h=h_pad//256, w=w_pad//256)
+
         return outputs[:, :, :, :h_input, :w_input]
 
     def init_weights(self, pretrained=None, strict=True):
         """Init weights for models.
-
         Args:
             pretrained (str, optional): Path for pretrained weights. If given
                 None, pretrained weights will not be loaded. Default: None.

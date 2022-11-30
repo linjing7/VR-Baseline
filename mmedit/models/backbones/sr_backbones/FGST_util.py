@@ -60,10 +60,12 @@ class ResidualBlock(nn.Module):
 class FeedForward(nn.Module):
     def __init__(self, dim, num_resblocks):
         super().__init__()
-        net = [
-            ResidualBlock(dim, act_layer=nn.GELU)
-            for _ in range(num_resblocks)]
-        self.net = nn.Sequential(*net)
+        main = []
+        # residual blocks
+        main.append(
+            make_layer(
+                ResidualBlockNoBN, num_resblocks, mid_channels=dim))
+        self.net = nn.Sequential(*main)
 
     def forward(self, x):
         out = self.net(x)
