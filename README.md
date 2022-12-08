@@ -21,7 +21,7 @@
 
 #### News
 
-- **2022.12.08 :** Pretrained model, training/testing log, visual results of FGST on GoPro and DVD dataset is released.  S2SVR will be provided later.🔥
+- **2022.12.08 :** Pretrained model, training/testing log, visual results of FGST on GoPro and DVD dataset are released.  S2SVR will be provided later.🔥
 - **2022.11.30 :** Data preparation codes of GoPro and DVD are provided. :high_brightness:
 
 - **2022.08.05 :** Pretrained model of FGST on GOPRO dataset is released. :dizzy:
