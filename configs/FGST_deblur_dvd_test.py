@@ -1,4 +1,4 @@
-exp_name = 'FGST_gopro_test'
+exp_name = 'FGST_dvd_test'
 
 # model settings
 model = dict(
@@ -24,7 +24,7 @@ train_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -50,7 +50,7 @@ test_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -73,7 +73,7 @@ demo_pipeline = [
     dict(
         type='GenerateSegmentIndices',
         interval_list=[1],
-        filename_tmpl='{:06d}.png'),
+        filename_tmpl='{:05d}.jpg'),
     dict(
         type='LoadImageFromFileList',
         io_backend='disk',
@@ -87,7 +87,7 @@ demo_pipeline = [
 data = dict(
     workers_per_gpu=6,
     train_dataloader=dict(
-        samples_per_gpu=1, drop_last=True, persistent_workers=False),  # 8 gpus
+        samples_per_gpu=2, drop_last=True, persistent_workers=False),  # 8 gpus
     val_dataloader=dict(samples_per_gpu=1, persistent_workers=False),
     test_dataloader=dict(
         samples_per_gpu=1, workers_per_gpu=1, persistent_workers=False),
@@ -98,30 +98,29 @@ data = dict(
         times=1000,
         dataset=dict(
             type=train_dataset_type,
-            lq_folder='data/GoPro/train/blur',
-            gt_folder='data/GoPro/train/GT',
-            num_input_frames=2,
+            lq_folder='data/DVD/quantitative_datasets/LQ',
+            gt_folder='data/DVD/quantitative_datasets/GT',
+            num_input_frames=13,
             pipeline=train_pipeline,
             scale=1,
-            ann_file='data/GoPro_train.txt',
+            ann_file='data/DVD_train.txt',
             test_mode=False)),
     # val
     val=dict(
         type=val_dataset_type,
-        lq_folder='data/GoPro/test/blur',
-        gt_folder='data/GoPro/test/GT',
+        lq_folder='data/DVD/quantitative_datasets/LQ',
+        gt_folder='data/DVD/quantitative_datasets/GT',
         pipeline=test_pipeline,
         scale=1,
-        ann_file='data/GoPro_test.txt',
+        ann_file='data/DVD_test.txt',
         test_mode=True),
     # test
     test=dict(
         type=val_dataset_type,
-        lq_folder='data/GoPro/test/blur',
-        gt_folder='data/GoPro/test/blur',
+        lq_folder='data/test/LQ',
+        gt_folder='data/test/GT',
         pipeline=test_pipeline,
         scale=1,
-        ann_file='data/GoPro_test.txt',
         test_mode=True),
 )
 
@@ -157,7 +156,7 @@ visual_config = None
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 work_dir = f'./experiments/{exp_name}'
-load_from = './pretrained_model/FGST_gopro.pth'
+load_from = './pretrained_model/FGST_dvd.pth'
 resume_from = None
 workflow = [('train', 1)]
 find_unused_parameters = True
