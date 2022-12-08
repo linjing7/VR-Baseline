@@ -19,7 +19,11 @@
 ![ntire](/figure/ntire.png)
 
 #### News
-- **2022.08.05 :** Pretrained model of FGST on GOPRO dataset is released. :rocket: 
+
+- **2022.12.08 :** Pretrained model, training/testing log, visual results of FGST on GoPro and DVD dataset is released.  S2SVR will be provided later.🔥
+- **2022.11.30 :** Data preparation codes of GoPro and DVD are provided. :high_brightness:
+
+- **2022.08.05 :** Pretrained model of FGST on GOPRO dataset is released. :dizzy:
 - **2022.05.14 :** Our FGST and S2SVR are accepted by ICML2022. :rocket: 
 
 |            *Super-Resolution*             |             *Deblur*             |            *Compressed Video Enhancement*             |
@@ -30,10 +34,15 @@
 - [Flow-Guided Sparse Transformer for Video Deblurring (ICML 2022)](https://arxiv.org/abs/2201.01893)
 - [Unsupervised Flow-Aligned Sequence-to-Sequence Learning for Video Restoration (ICML 2022)](https://arxiv.org/abs/2205.10195)
 
+|                  Method                  | Dataset | Pretrained Model | Training Log  | Testing Log  |                          Visual Result                           |                      Quantitative  Result                      |
+| :--------------------------------------: | :--------: | :-------: | :---: | :---: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [FGST](https://arxiv.org/abs/2201.01893) |   GOPRO    | [Google](https://drive.google.com/file/d/1hG-sYmCAWYxRTpUFz3enxvJrP9V0PCgk/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/1WkbfAgGw6G2W2VY8549P8w?pwd=VR11) | [Google](https://drive.google.com/file/d/1MZjrML8adrrDbwmV_MgO3pSXMWQKcwXj/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/19-dovgSzODQPNogokx7EIQ?pwd=VR11) | [Google](https://drive.google.com/file/d/1q0Obom4r21x7hMBx0BTJ3BiDtLBgjcYM/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/1L61HUuw5KISZyN59FVMxXg?pwd=VR11) | [Google](https://drive.google.com/drive/folders/1RTQmisGGpNV8OTh_YAwT2Z3XWeGpcVdK?usp=share_link) / [Baidu](https://pan.baidu.com/s/1BDeNloos9T14ay6Vi1_FLw?pwd=VR11) | 33.02 / 0.947 |
+| [FGST](https://arxiv.org/abs/2201.01893) |   DVD      |  [Google](https://drive.google.com/file/d/1L8kk3x7d3Ef0vN4ExU_VdXsz5POZjDgr/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/1l8AGhqNh07CQFpF10XoyeQ?pwd=VR11)  | [Google](https://drive.google.com/file/d/1IggT0JCmq6J4wNTMSZGflzou2nU98jOb/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/1rj4NdB9l2v6QihtwK18Ghw?pwd=VR11) | [Google](https://drive.google.com/file/d/1jhEjuB9Mtec6wrfDXWGeyFsxmM0j8DTL/view?usp=share_link) / [Baidu](https://pan.baidu.com/s/1zCCQ2WFcBwGIMgfWZCSxvA?pwd=VR11) | [Google](https://drive.google.com/drive/folders/1hd-Fka1Ei27WSEwL5qn6romntkpxjZps?usp=share_link) / [Baidu](https://pan.baidu.com/s/1muukHrqKOFlyGsSqmmm1TQ?pwd=VR11) | 33.50 / 0.945 |
+
 ## 1. Create Environment:
 
 - Python 3 (Recommend to use [Anaconda](https://www.anaconda.com/download/#linux))
-
+![](../../../../../../Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/media/icon.06a6aa23.png)
 - NVIDIA GPU + [CUDA](https://developer.nvidia.com/cuda-downloads)
 
 - Python packages:
@@ -122,6 +131,9 @@ cd VR_Baseline
 
 # testing FGST on GoPro dataset
 bash tools/dist_train.sh configs/FGST_deblur_gopro_test.py 8
+
+# testing FGST on DVD dataset
+bash tools/dist_train.sh configs/FGST_deblur_dvd_test.py 8
 ```
 To test on your own dataset:
 ```python
