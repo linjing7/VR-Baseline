@@ -1,4 +1,5 @@
 # A Toolbox for Video Restoration
+
 [![jiedu](https://img.shields.io/badge/中文解读-S2SVR-179bd3)](https://mp.weixin.qq.com/s/0Hqp2A8pjo1_Gn23LEpPXg)
 [![jiedu](https://img.shields.io/badge/中文解读-FGST-179bd3)](https://zhuanlan.zhihu.com/p/563455469)
 ![visitors](https://visitor-badge.glitch.me/badge?page_id=linjing7/VR-Baseline)
@@ -26,28 +27,27 @@
 - **2022.08.05 :** Pretrained model of FGST on GOPRO dataset is released. :dizzy:
 - **2022.05.14 :** Our FGST and S2SVR are accepted by ICML2022. :rocket: 
 
-|            *Super-Resolution*             |             *Deblur*             |            *Compressed Video Enhancement*             |
-| :------------------------------: | :-------------------------------: |  :-------------------------------: |
+|                  *Super-Resolution*                  |                         *Deblur*                         |                *Compressed Video Enhancement*                |
+| :--------------------------------------------------: | :------------------------------------------------------: | :----------------------------------------------------------: |
 | <img src="./figure/lr2sr.gif"  height=135 width=240> | <img src="./figure/blur2sharp.gif" height=135 width=240> | <img src="./figure/compressed2enhanced.gif" height=135 width=240> |
 
 #### Papers
+
 - [Flow-Guided Sparse Transformer for Video Deblurring (ICML 2022)](https://arxiv.org/abs/2201.01893)
 - [Unsupervised Flow-Aligned Sequence-to-Sequence Learning for Video Restoration (ICML 2022)](https://arxiv.org/abs/2205.10195)
 
-|                  Method                  | Dataset | Pretrained Model | Training Log  | Testing Log  |                          Visual Result                           |                      Quantitative  Result                      |
-| :--------------------------------------: | :--------: | :-------: | :---: | :---: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-<<<<<<< HEAD
-| [FGST](https://arxiv.org/abs/2201.01893) |   [GOPRO](https://seungjunnah.github.io/Datasets/gopro)   | [Google Drive](https://drive.google.com/file/d/1hG-sYmCAWYxRTpUFz3enxvJrP9V0PCgk/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1WkbfAgGw6G2W2VY8549P8w?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1MZjrML8adrrDbwmV_MgO3pSXMWQKcwXj/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/19-dovgSzODQPNogokx7EIQ?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1q0Obom4r21x7hMBx0BTJ3BiDtLBgjcYM/view?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1L61HUuw5KISZyN59FVMxXg?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1RTQmisGGpNV8OTh_YAwT2Z3XWeGpcVdK?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1BDeNloos9T14ay6Vi1_FLw?pwd=VR11) | 33.02 / 0.947 |
-| [FGST](https://arxiv.org/abs/2201.01893) | [DVD](https://www.cs.ubc.ca/labs/imager/tr/2017/DeepVideoDeblurring/#dataset)  |  [Google Drive](https://drive.google.com/file/d/1L8kk3x7d3Ef0vN4ExU_VdXsz5POZjDgr/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1l8AGhqNh07CQFpF10XoyeQ?pwd=VR11)  | [Google Drive](https://drive.google.com/file/d/1IggT0JCmq6J4wNTMSZGflzou2nU98jOb/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1rj4NdB9l2v6QihtwK18Ghw?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1jhEjuB9Mtec6wrfDXWGeyFsxmM0j8DTL/view?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1zCCQ2WFcBwGIMgfWZCSxvA?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1hd-Fka1Ei27WSEwL5qn6romntkpxjZps?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1muukHrqKOFlyGsSqmmm1TQ?pwd=VR11) | 33.50 / 0.945 |
-=======
-| [FGST](https://arxiv.org/abs/2201.01893) |   GOPRO    | [Google Drive](https://drive.google.com/file/d/1hG-sYmCAWYxRTpUFz3enxvJrP9V0PCgk/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1WkbfAgGw6G2W2VY8549P8w?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1MZjrML8adrrDbwmV_MgO3pSXMWQKcwXj/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/19-dovgSzODQPNogokx7EIQ?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1q0Obom4r21x7hMBx0BTJ3BiDtLBgjcYM/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1L61HUuw5KISZyN59FVMxXg?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1RTQmisGGpNV8OTh_YAwT2Z3XWeGpcVdK?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1BDeNloos9T14ay6Vi1_FLw?pwd=VR11) | 33.02 / 0.947 |
-| [FGST](https://arxiv.org/abs/2201.01893) |   DVD      |  [Google Drive](https://drive.google.com/file/d/1L8kk3x7d3Ef0vN4ExU_VdXsz5POZjDgr/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1l8AGhqNh07CQFpF10XoyeQ?pwd=VR11)  | [Google Drive](https://drive.google.com/file/d/1IggT0JCmq6J4wNTMSZGflzou2nU98jOb/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1rj4NdB9l2v6QihtwK18Ghw?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1jhEjuB9Mtec6wrfDXWGeyFsxmM0j8DTL/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1zCCQ2WFcBwGIMgfWZCSxvA?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1hd-Fka1Ei27WSEwL5qn6romntkpxjZps?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1muukHrqKOFlyGsSqmmm1TQ?pwd=VR11) | 33.50 / 0.945 |
+|                  Method                  |                           Dataset                            |                       Pretrained Model                       |                         Training Log                         |                         Testing Log                          |                        Visual Result                         | Quantitative  Result |
+| :--------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------: |
+|               <<<<<<< HEAD               |                                                              |                                                              |                                                              |                                                              |                                                              |                      |
+| [FGST](https://arxiv.org/abs/2201.01893) |    [GOPRO](https://seungjunnah.github.io/Datasets/gopro)     | [Google Drive](https://drive.google.com/file/d/1hG-sYmCAWYxRTpUFz3enxvJrP9V0PCgk/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1WkbfAgGw6G2W2VY8549P8w?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1MZjrML8adrrDbwmV_MgO3pSXMWQKcwXj/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/19-dovgSzODQPNogokx7EIQ?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1q0Obom4r21x7hMBx0BTJ3BiDtLBgjcYM/view?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1L61HUuw5KISZyN59FVMxXg?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1RTQmisGGpNV8OTh_YAwT2Z3XWeGpcVdK?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1BDeNloos9T14ay6Vi1_FLw?pwd=VR11) |    33.02 / 0.947     |
+| [FGST](https://arxiv.org/abs/2201.01893) | [DVD](https://www.cs.ubc.ca/labs/imager/tr/2017/DeepVideoDeblurring/#dataset) | [Google Drive](https://drive.google.com/file/d/1L8kk3x7d3Ef0vN4ExU_VdXsz5POZjDgr/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1l8AGhqNh07CQFpF10XoyeQ?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1IggT0JCmq6J4wNTMSZGflzou2nU98jOb/view?usp=share_link) / [Baidu Disk](https://pan.baidu.com/s/1rj4NdB9l2v6QihtwK18Ghw?pwd=VR11) | [Google Drive](https://drive.google.com/file/d/1jhEjuB9Mtec6wrfDXWGeyFsxmM0j8DTL/view?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1zCCQ2WFcBwGIMgfWZCSxvA?pwd=VR11) | [Google Drive](https://drive.google.com/drive/folders/1hd-Fka1Ei27WSEwL5qn6romntkpxjZps?usp=share_link) /  [Baidu Disk](https://pan.baidu.com/s/1muukHrqKOFlyGsSqmmm1TQ?pwd=VR11) |    33.50 / 0.945     |
+
 >>>>>>> 15ca79c56d54a553076602e2ff99114eacb315f2
 
 ## 1. Create Environment:
 
 - Python 3 (Recommend to use [Anaconda](https://www.anaconda.com/download/#linux))
-![](../../../../../../Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/media/icon.06a6aa23.png)
+  ![](../../../../../../Applications/Typora.app/Contents/Resources/TypeMark/page-dist/static/media/icon.06a6aa23.png)
 - NVIDIA GPU + [CUDA](https://developer.nvidia.com/cuda-downloads)
 
 - Python packages:
@@ -88,6 +88,7 @@ Download the datasets ([GOPRO](https://seungjunnah.github.io/Datasets/gopro),[DV
 ```
 
 You can run the following command to recollect GoPro and DVD dataset:
+
 ```shell
 cd VR-Baseline/data_preparation
 
@@ -97,6 +98,7 @@ python GoPro_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
 # recollect DVD dataset
 python DVD_Util.py --input_path INPUT_PATH --save_path SAVE_PATH
 ```
+
 You need to replace `INPUT_PATH` and `SAVE_PATH` with your own path.
 
 ## 3. Training:
@@ -131,6 +133,7 @@ The training log, trained model will be available in `VR-Baseline/experiments/` 
 Download [pretrained model](https://drive.google.com/drive/folders/1cmT0ti0-XwuCMcAhVEQWcD6rqCEwLo2T?usp=sharing) and run the following command.
 
 To test on benchmark:
+
 ```shell
 cd VR_Baseline
 
@@ -140,7 +143,9 @@ bash tools/dist_train.sh configs/FGST_deblur_gopro_test.py 8
 # testing FGST on DVD dataset
 bash tools/dist_train.sh configs/FGST_deblur_dvd_test.py 8
 ```
+
 To test on your own dataset:
+
 ```python
 python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
 ```
@@ -163,7 +168,6 @@ We refer to codes from [BasicVSR++](https://github.com/ckkelvinchan/BasicVSR_Plu
 If this repo helps you, please consider citing our works:
 
 ```shell
-
 # FGST
 @inproceedings{fgst,
   title={Flow-Guided Sparse Transformer for Video Deblurring},
