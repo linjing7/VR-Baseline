@@ -15,7 +15,7 @@
 
 #### Authors
 
- [Jing Lin*](https://scholar.google.com/citations?hl=zh-CN&user=SvaU2GMAAAAJ), [Yuanhao Cai*](https://caiyuanhao1998.github.io), [Xiaowan Hu](https://scholar.google.com/citations?user=a_WRvyIAAAAJ&hl=zh-CN), [Haoqian Wang](https://scholar.google.com.hk/citations?user=eldgnIYAAAAJ&hl=zh-CN), [Youliang Yan](https://scholar.google.com/citations?user=JPUwfAMAAAAJ&hl=th), [Xueyi Zou](https://xueyizou.github.io/), [Henghui Ding](https://henghuiding.github.io/), [Yulun Zhang](yulunzhang.com), [Radu Timofte](https://people.ee.ethz.ch/~timofter/), and [Luc Van Gool](https://ee.ethz.ch/the-department/faculty/professors/person-detail.OTAyMzM=.TGlzdC80MTEsMTA1ODA0MjU5.html)
+ Jing Lin*, Yuanhao Cai*, Xiaowan Hu, Haoqian Wang, Youliang Yan, Xueyi Zou, Henghui Ding, Yulun Zhang, Radu Timofte, and Luc Van Gool
 
 ![ntire](/figure/ntire.png)
 
