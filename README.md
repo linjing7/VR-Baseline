@@ -143,12 +143,6 @@ bash tools/dist_train.sh configs/FGST_deblur_gopro_test.py 8
 bash tools/dist_train.sh configs/FGST_deblur_dvd_test.py 8
 ```
 
-To test on your own dataset:
-
-```python
-python demo/restoration_video_demo.py ${CONFIG} ${CHKPT} ${IN_PATH} ${OUT_PATH}
-```
-
 ## 5.  TODO 
 
 These works are mostly done during the internship at [HUAWEI Noah's Ark Lab](http://dev3.noahlab.com.hk/). Due to the limitation of company regulations, the original pre-trained models can not be transferred and published here. We will retrain more models and open-source them when we have enough GPUs as soon as possible. 
